@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Mart - Login</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: Arial, sans-serif;
+        }
+
+        .form-container {
+            width: 300px;
+            margin: 100px auto;
+            background-color: #1e1e1e;
+            padding: 20px;
+            border: 1px solid #333;
+            border-radius: 10px;
+        }
+
+        .form-container h2 {
+            text-align: center;
+            color: #ff5555;
+        }
+
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #333;
+            border-radius: 5px;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ff5555;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .form-container button:hover {
+            background-color: #ff3333;
+        }
+
+        .form-container p {
+            text-align: center;
+        }
+
+        .form-container a {
+            color: #ff5555;
+            text-decoration: none;
+        }
+
+        .form-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Login Form -->
+    <div class="form-container" id="login-form">
+        <h2>Login</h2>
+        <input type="text" id="login-username" placeholder="Username" required>
+        <input type="password" id="login-password" placeholder="Password" required>
+        <button onclick="login()">Login</button>
+        <p>Don't have an account? <a href="#" onclick="showSignup()">Sign Up</a></p>
+    </div>
+
+    <!-- Signup Form -->
+    <div class="form-container" id="signup-form" style="display: none;">
+        <h2>Sign Up</h2>
+        <input type="text" id="signup-username" placeholder="Username" required>
+        <input type="password" id="signup-password" placeholder="Password" required>
+        <button onclick="signup()">Sign Up</button>
+        <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
+    </div>
+
+    <script>
+        // Show Signup Form
+        function showSignup() {
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('signup-form').style.display = 'block';
+        }
+
+        // Show Login Form
+        function showLogin() {
+            document.getElementById('signup-form').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
+        }
+
+        // Signup Functionality (Store credentials in localStorage)
+        function signup() {
+            const username = document.getElementById('signup-username').value;
+            const password = document.getElementById('signup-password').value;
+
+            if (username && password) {
+                // Check if username already exists
+                if (localStorage.getItem(username)) {
+                    alert('User already exists!');
+                } else {
+                    // Store username and password in localStorage
+                    localStorage.setItem(username, password);
+                    alert('Signup successful! Please login.');
+                    showLogin(); // Redirect to login page after signup
+                }
+            } else {
+                alert('Please fill in both fields.');
+            }
+        }
+
+        // Login Functionality (Check credentials from localStorage)
+        function login() {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+
+            // Get stored password for entered username
+            const storedPassword = localStorage.getItem(username);
+
+            if (storedPassword === password) {
+                alert(`Welcome, ${username}!`);
+                // Redirect to product page (simulated with an alert)
+                window.location.href = "index.html"; // Change this to your product page
+            } else {
+                alert('Invalid username or password!');
+            }
+        }
+    </script>
+
+</body>
+</html>
